@@ -26,24 +26,24 @@ test.describe('SauceDemo UI Tests', () => {
   test('should add product to cart', async ({ loginPage, inventoryPage, cartPage }) => {
     await loginPage.loginAsStandardUser();
     await inventoryPage.addBackpackToCart();
-    await expect(inventoryPage.shoppingCartBadge).toHaveText('1');
-    await inventoryPage.openCart();
+    await expect(inventoryPage.header.cartBadge).toHaveText('1');
+    await inventoryPage.header.openCart();
     await expect(cartPage.backpack).toBeVisible();
   });
 
   test('should remove product from cart', async ({ loginPage, inventoryPage, cartPage }) => {
     await loginPage.loginAsStandardUser();
     await inventoryPage.addBackpackToCart();
-    await inventoryPage.openCart();
+    await inventoryPage.header.openCart();
     await cartPage.removeBackpack();
     await expect(cartPage.cartItems).toHaveCount(0);
-    await expect(inventoryPage.shoppingCartBadge).toHaveCount(0);
+    await expect(cartPage.header.cartBadge).toHaveCount(0);
   });
 
   test('should complete checkout successfully', async ({ loginPage, inventoryPage, cartPage, checkoutPage }) => {
     await loginPage.loginAsStandardUser();
     await inventoryPage.addBackpackToCart();
-    await inventoryPage.openCart();
+    await inventoryPage.header.openCart();
     await cartPage.proceedToCheckout();
     await checkoutPage.fillInformation('John', 'Doe', '12345');
     await checkoutPage.continue();
@@ -67,7 +67,7 @@ test.describe('SauceDemo UI Tests', () => {
   test('should require first name during checkout', async ({ loginPage, inventoryPage, cartPage, checkoutPage }) => {
     await loginPage.loginAsStandardUser();
     await inventoryPage.addBackpackToCart();
-    await inventoryPage.openCart();
+    await inventoryPage.header.openCart();
     await cartPage.proceedToCheckout();
     await checkoutPage.fillInformation('', 'Doe', '12345');
     await checkoutPage.continue();

@@ -1,4 +1,5 @@
 import { type Page, type Locator } from '@playwright/test';
+import { HeaderComponent } from './components/HeaderComponent';
 
 export class InventoryPage {
   readonly page: Page;
@@ -7,8 +8,7 @@ export class InventoryPage {
   readonly inventoryList: Locator;
   readonly productPrices: Locator;
   readonly sortDropdown: Locator;
-  readonly shoppingCartBadge: Locator;
-  readonly shoppingCartLink: Locator;
+  readonly header: HeaderComponent;
   readonly addBackpackButton: Locator;
 
   constructor(page: Page) {
@@ -18,8 +18,7 @@ export class InventoryPage {
     this.inventoryList = page.locator('.inventory_list');
     this.productPrices = page.locator('.inventory_item_price');
     this.sortDropdown = page.locator('[data-test="product-sort-container"]');
-    this.shoppingCartBadge = page.locator('[data-test="shopping-cart-badge"]');
-    this.shoppingCartLink = page.locator('[data-test="shopping-cart-link"]');
+    this.header = new HeaderComponent(page);
     this.addBackpackButton = page.locator('[data-test="add-to-cart-sauce-labs-backpack"]');
   }
 
@@ -29,9 +28,5 @@ export class InventoryPage {
 
   async addBackpackToCart() {
     await this.addBackpackButton.click();
-  }
-
-  async openCart() {
-    await this.shoppingCartLink.click();
   }
 }
